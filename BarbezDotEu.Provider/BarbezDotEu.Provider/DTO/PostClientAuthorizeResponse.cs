@@ -10,7 +10,7 @@ namespace BarbezDotEu.Provider.DTO
     /// <summary>
     /// Implements a client authorization response DTO in accordance to the interface as defined and shared by Vimeo, Twitter, and others.
     /// </summary>
-    public class PostClientAuthorizeResponse : IHasHttpResponseMessage
+    public class PostClientAuthorizeResponse : ICanFail
     {
         /// <summary>
         /// Gets or sets the access token.
@@ -31,7 +31,10 @@ namespace BarbezDotEu.Provider.DTO
         public string Scope { get; set; }
 
         /// <inheritdoc/>
-        public HttpResponseMessage HttpResponseMessage { get; set; }
+        public HttpResponseMessage FailedResponse { get; set; }
+
+        /// <inheritdoc/>
+        public bool HasFailed => FailedResponse != null;
 
         // Omitting implementation of "app" property as not (yet) relevant.
     }

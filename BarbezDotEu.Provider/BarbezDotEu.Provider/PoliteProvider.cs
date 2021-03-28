@@ -51,7 +51,7 @@ namespace BarbezDotEu.Provider
 
         /// <inheritdoc/>
         protected async Task<T> Request<T>(HttpRequestMessage request, bool retryOnError = true, double waitingMinutesBeforeRetry = 15)
-            where T : IHasHttpResponseMessage
+            where T : ICanFail
         {
             try
             {
@@ -70,7 +70,7 @@ namespace BarbezDotEu.Provider
                 if (retryOnError)
                 {
                     logger.LogWarning($"{nameof(PoliteProvider)} waiting {waitingMinutesBeforeRetry} minutes " +
-                        $"because of an exception occuring during a {typeof(T)} request. No crash, going to try again. Exception details below.{Environment.NewLine}{exception}.");
+                        $"because of an exception occuring during a {typeof(T)} request. No crash, going to try again. Exception details:{Environment.NewLine}{exception}.");
 
                     Thread.Sleep(TimeSpan.FromMinutes(waitingMinutesBeforeRetry));
                     var newRequest = await HttpRequestMessageCloner.Clone(request);
