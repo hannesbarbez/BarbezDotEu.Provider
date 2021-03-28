@@ -51,6 +51,7 @@ namespace BarbezDotEu.Provider
 
         /// <inheritdoc/>
         protected async Task<T> Request<T>(HttpRequestMessage request, bool retryOnError = true, double waitingMinutesBeforeRetry = 15)
+            where T : IHasHttpResponseMessage
         {
             try
             {

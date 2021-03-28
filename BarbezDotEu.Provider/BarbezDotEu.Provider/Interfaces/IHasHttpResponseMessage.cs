@@ -7,6 +7,9 @@ namespace BarbezDotEu.Provider.Interfaces
 {
     public interface IHasHttpResponseMessage
     {
+        /// <summary>
+        /// Gets or sets the <see cref="HttpRequestMessage"/>.
+        /// </summary>
         public HttpResponseMessage HttpResponseMessage { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Hannes Barbez. All rights reserved.
 // Licensed under the GNU General Public License v3.0
 
+using System.Net.Http;
+using BarbezDotEu.Provider.Interfaces;
 using Newtonsoft.Json;
 
 namespace BarbezDotEu.Provider.DTO
@@ -8,7 +10,7 @@ namespace BarbezDotEu.Provider.DTO
     /// <summary>
     /// Implements a client authorization response DTO in accordance to the interface as defined and shared by Vimeo, Twitter, and others.
     /// </summary>
-    public class PostClientAuthorizeResponse
+    public class PostClientAuthorizeResponse : IHasHttpResponseMessage
     {
         /// <summary>
         /// Gets or sets the access token.
@@ -27,6 +29,9 @@ namespace BarbezDotEu.Provider.DTO
         /// </summary>
         [JsonProperty("scope")]
         public string Scope { get; set; }
+
+        /// <inheritdoc/>
+        public HttpResponseMessage HttpResponseMessage { get; set; }
 
         // Omitting implementation of "app" property as not (yet) relevant.
     }
