@@ -24,6 +24,11 @@ namespace BarbezDotEu.Provider
         private readonly ILogger<IHostedService> logger;
         private readonly HttpClient httpClient;
 
+        /// <summary>
+        /// Constructs a new <see cref="PoliteProvider"/>.
+        /// </summary>
+        /// <param name="logger">A <see cref="ILogger"/> to use for logging.</param>
+        /// <param name="httpClientFactory">The <see cref="IHttpClientFactory"/> to use.</param>
         public PoliteProvider(ILogger<IHostedService> logger, IHttpClientFactory httpClientFactory)
         {
             this.logger = logger;
