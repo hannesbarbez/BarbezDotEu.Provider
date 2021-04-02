@@ -99,6 +99,7 @@ namespace BarbezDotEu.Provider.DTO
             this.Referrer = new Uri(referrer);
             this.CacheControl = new CacheControlHeaderValue() { NoCache = true };
             this.Pragma = new NameValueHeaderValue("pragma", "no-cache");
+            this.Connection = "keep-alive";
 
             this.Others = new KeyValuePair<string, string>[]
             {
