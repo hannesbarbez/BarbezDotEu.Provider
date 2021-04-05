@@ -23,10 +23,10 @@ namespace BarbezDotEu.Provider.DTO
         /// </summary>
         public MediaTypeWithQualityHeaderValue[] AcceptHeaders { get; }
 
-        ///// <summary>
-        ///// Gets an Edge style user agent header.
-        ///// </summary>
-        //public ProductInfoHeaderValue UserAgent { get; }
+        /// <summary>
+        /// Gets an Edge style user agent header.
+        /// </summary>
+        public string UserAgent { get; }
 
         /// <summary>
         /// Gets an Edge style accept header.
@@ -52,12 +52,12 @@ namespace BarbezDotEu.Provider.DTO
             foreach (var acceptHeader in this.AcceptHeaders)
                 httpRequestMessage.Headers.Accept.Add(acceptHeader);
 
-            //httpRequestMessage.Headers.UserAgent.Add(this.UserAgent);
             httpRequestMessage.Headers.AcceptLanguage.Add(this.AcceptLanguage);
             httpRequestMessage.Headers.Referrer = this.Referrer;
             httpRequestMessage.Headers.CacheControl = this.CacheControl;
             httpRequestMessage.Headers.Pragma.Add(this.Pragma);
             httpRequestMessage.Headers.Connection.Add(this.Connection);
+            httpRequestMessage.Headers.Add("User-Agent", this.UserAgent);
 
             foreach (var header in this.Others)
                 httpRequestMessage.Headers.Add(header.Key, header.Value);
@@ -94,7 +94,7 @@ namespace BarbezDotEu.Provider.DTO
             var acceptHeaderText = new MediaTypeWithQualityHeaderValue(MediaTypeNames.Text.Plain);
             var acceptHeaderAnything = new MediaTypeWithQualityHeaderValue("*/*");
             this.AcceptHeaders = new[] { acceptHeaderJson, acceptHeaderText, acceptHeaderAnything };
-            //this.UserAgent = new ProductInfoHeaderValue("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36 Edg/89.0.774.63");
+            this.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36 Edg/89.0.774.63";
             this.AcceptLanguage = new StringWithQualityHeaderValue("en-US", 0.9);
             this.Referrer = new Uri(referrer);
             this.CacheControl = new CacheControlHeaderValue() { NoCache = true };
