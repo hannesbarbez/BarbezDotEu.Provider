@@ -63,10 +63,13 @@ namespace BarbezDotEu.Provider
                 this.UpdateTimeOfLastCall(DateTime.UtcNow);
                 using var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
                 if (!response.IsSuccessStatusCode)
-                    return default;
+                {
+                    var failed = (T)Activator.CreateInstance(typeof(T));
+                    failed.FailedResponse = response;
+                    return failed;
+                }
 
                 var stream = await response.Content.ReadAsStreamAsync();
-                response.EnsureSuccessStatusCode();
                 var result = await stream.ReadAndDeserializeFromJsonAsync<T>();
                 return result;
             }
