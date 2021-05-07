@@ -21,8 +21,8 @@ namespace BarbezDotEu.Provider
         private long multiplier = 1;
         private DateTime lastQueryTime;
         private int requiredSecondsBetweenCalls;
-        private readonly ILogger<IHostedService> logger;
         private readonly HttpClient httpClient;
+        protected readonly ILogger<IHostedService> logger;
 
         /// <summary>
         /// Constructs a new <see cref="PoliteProvider"/>.
