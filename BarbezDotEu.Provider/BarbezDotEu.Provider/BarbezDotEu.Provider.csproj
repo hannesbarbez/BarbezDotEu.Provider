@@ -5,14 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BarbezDotEu.Http" Version="1.0.0" />
     <PackageReference Include="Marvin.StreamExtensions" Version="1.2.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\BarbezDotEu.Http\BarbezDotEu.Http\BarbezDotEu.Http\BarbezDotEu.Http.csproj" />
   </ItemGroup>
 
 </Project>
