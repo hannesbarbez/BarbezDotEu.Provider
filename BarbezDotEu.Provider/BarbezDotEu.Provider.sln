@@ -5,10 +5,6 @@ VisualStudioVersion = 16.0.31105.61
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbezDotEu.Provider", "BarbezDotEu.Provider\BarbezDotEu.Provider.csproj", "{37041AAC-31FB-469C-A61A-4B805FA20ED3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BarbezDotEu.Http", "..\..\BarbezDotEu.Http\BarbezDotEu.Http\BarbezDotEu.Http\BarbezDotEu.Http.csproj", "{48B5714E-D133-4350-B912-F4064492BA76}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{F67977A5-1771-4D20-AE2F-D794D094D1C7}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,16 +15,9 @@ Global
 		{37041AAC-31FB-469C-A61A-4B805FA20ED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37041AAC-31FB-469C-A61A-4B805FA20ED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37041AAC-31FB-469C-A61A-4B805FA20ED3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{48B5714E-D133-4350-B912-F4064492BA76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{48B5714E-D133-4350-B912-F4064492BA76}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{48B5714E-D133-4350-B912-F4064492BA76}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{48B5714E-D133-4350-B912-F4064492BA76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{48B5714E-D133-4350-B912-F4064492BA76} = {F67977A5-1771-4D20-AE2F-D794D094D1C7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82D7A0FE-E5F2-48CA-8D93-D365BE8FC206}

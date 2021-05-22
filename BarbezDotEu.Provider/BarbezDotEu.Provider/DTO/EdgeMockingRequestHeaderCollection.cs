@@ -15,6 +15,8 @@ namespace BarbezDotEu.Provider.DTO
     /// <remarks>
     /// The purpose of this class is to be used by a provider when said provider does not want to look too much like a bot.
     /// How can a bot not look like a bot? By, for example, looking like Edge instead.
+    /// 
+    /// Note: The correct MO is to use your application's actual name in the HTTP headers.
     /// </remarks>
     public class EdgeMockingRequestHeaderCollection
     {
@@ -75,7 +77,7 @@ namespace BarbezDotEu.Provider.DTO
         /// - Edge style do-not-track header;
         /// - Edge style sec-fetch-site header;
         /// - Edge style sec-fetch-mode header;
-        /// - Edge style sec-fetch-dest header..
+        /// - Edge style sec-fetch-dest header.
         /// </summary>
         public KeyValuePair<string, string>[] Others { get; }
 
