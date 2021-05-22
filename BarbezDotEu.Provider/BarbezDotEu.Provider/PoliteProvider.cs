@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 using BarbezDotEu.Http;
 using BarbezDotEu.Provider.Interfaces;
 using Marvin.StreamExtensions;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace BarbezDotEu.Provider
 {
     /// <summary>
-    /// Implements a provider with support for rate limiting as imposed by the third-party data provider.
+    /// Implements an HTTP(S) client that supports rate limiting so that a polite integration
+    /// with a third-party data provider can be implemented.
     /// </summary>
     public class PoliteProvider : IPoliteProvider
     {
@@ -22,14 +22,14 @@ namespace BarbezDotEu.Provider
         private DateTime lastQueryTime;
         private int requiredSecondsBetweenCalls;
         private readonly HttpClient httpClient;
-        protected readonly ILogger<IHostedService> logger;
+        protected readonly ILogger logger;
 
         /// <summary>
         /// Constructs a new <see cref="PoliteProvider"/>.
         /// </summary>
         /// <param name="logger">A <see cref="ILogger"/> to use for logging.</param>
         /// <param name="httpClientFactory">The <see cref="IHttpClientFactory"/> to use.</param>
-        public PoliteProvider(ILogger<IHostedService> logger, IHttpClientFactory httpClientFactory)
+        public PoliteProvider(ILogger logger, IHttpClientFactory httpClientFactory)
         {
             this.logger = logger;
             this.httpClient = httpClientFactory.CreateClient();

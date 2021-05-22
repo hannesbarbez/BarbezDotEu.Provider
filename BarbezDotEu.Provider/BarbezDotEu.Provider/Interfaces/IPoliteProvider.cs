@@ -3,6 +3,10 @@
 
 namespace BarbezDotEu.Provider.Interfaces
 {
+    /// <summary>
+    /// Defines an HTTP(S) client that supports rate limiting so that a polite integration
+    /// with a third-party data provider can be implemented.
+    /// </summary>
     public interface IPoliteProvider
     {
         /// <summary>
