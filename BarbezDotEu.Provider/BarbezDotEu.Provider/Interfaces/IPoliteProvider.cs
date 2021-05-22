@@ -15,7 +15,7 @@ namespace BarbezDotEu.Provider.Interfaces
         /// <remarks>
         /// Any other methods of this <see cref="IPoliteProvider"/> should be called only after this method was called and returned true first, ensuring this application will not be blacklisted or will start receiving errors.
         /// </remarks>
-        bool IsPolite();
+        public bool IsPolite();
 
         /// <summary>
         /// Sets a multiplier intended for cases where multiple calls to the third-party resource have to be performed in rapid succession (a batch).
@@ -26,6 +26,6 @@ namespace BarbezDotEu.Provider.Interfaces
         /// E.g. if ordinary 1 call per minute can be made, but 2 are made in batch, set the multiplier to 2.
         /// This way, the next batch will only be allowed to run in 2 minutes' time, thus still respecting the average rate limit of 1 call per minute.
         /// </remarks>
-        void SetMultiplier(long multiplier);
+        public void SetMultiplier(long multiplier);
     }
 }

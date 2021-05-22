@@ -55,10 +55,19 @@ namespace BarbezDotEu.Provider
             this.multiplier = multiplier;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Sends a <see cref="HttpRequestMessage"/> to the third-party provider, expecting a certain response.
+        /// </summary>
+        /// <typeparam name="T">The expected response content type.</typeparam>
+        /// <param name="request">The <see cref="HttpRequestMessage"/> to send to the third-party provider.</param>
+        /// <param name="retryOnError"></param>
+        /// <param name="waitingMinutesBeforeRetry">The number of minutes to wait before automatically retrying re-sending the request, if the intention is to retry again upon error.</param>
+        /// <returns>The expected response content type.</returns>
         protected async Task<T> Request<T>(HttpRequestMessage request, bool retryOnError = true, double waitingMinutesBeforeRetry = 15)
             where T : ICanFail
         {
+            // TODO: Extend ICanFail to ICanFail<T> so it will be far more generic, after adding a field specific property "public T DTO {get;set;}".
+
             try
             {
                 this.UpdateTimeOfLastCall(DateTime.UtcNow);
