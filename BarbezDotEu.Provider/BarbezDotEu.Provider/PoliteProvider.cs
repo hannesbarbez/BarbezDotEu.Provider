@@ -3,6 +3,8 @@
 
 using System;
 using System.Net.Http;
+using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using BarbezDotEu.Http;
@@ -70,6 +72,17 @@ namespace BarbezDotEu.Provider
                 this.UpdateTimeOfLastCall(DateTime.UtcNow);
                 using var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
                 var politeResponse = new PoliteReponse<T>(response);
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                };
+
+                var content = await response.Content.ReadFromJsonAsync<T>(options);
+
+                // For Blazor, no "actual" DDD since needs async and constructors don't do async.
+                // https://docs.microsoft.com/en-us/aspnet/core/blazor/call-web-api?view=aspnetcore-5.0 
+                politeResponse.SetContent(content);
+
                 return politeResponse;
             }
             catch (Exception exception)

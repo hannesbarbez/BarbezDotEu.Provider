@@ -24,5 +24,11 @@ namespace BarbezDotEu.Provider.Interfaces
         /// Gets a value indicating whether the <see cref="System.Net.Http.HttpResponseMessage"/> indicates a fault.
         /// </summary>
         public bool HasFailed { get; }
+
+        /// <summary>
+        /// Sets the the actual response content.
+        /// </summary>
+        /// <param name="content">The response content to set.</param>
+        void SetContent(T content);
     }
 }

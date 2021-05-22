@@ -3,15 +3,12 @@
 
 using System.Net.Http;
 using BarbezDotEu.Provider.Interfaces;
-using Marvin.StreamExtensions;
 
 namespace BarbezDotEu.Provider
 {
     /// <inheritdoc/>
     public class PoliteReponse<T> : IPoliteResponse<T> where T : class
     {
-        private T content;
-
         /// <summary>
         /// Constructs a new <see cref="PoliteReponse{T}"/> from a given <see cref="HttpResponseMessage"/>.
         /// </summary>
@@ -19,17 +16,21 @@ namespace BarbezDotEu.Provider
         public PoliteReponse(HttpResponseMessage httpResponseMessage)
         {
             this.HttpResponseMessage = httpResponseMessage;
-            var stream = this.HttpResponseMessage.Content.ReadAsStreamAsync().Result;
-            this.Content = stream.ReadAndDeserializeFromJson<T>();
         }
 
         /// <inheritdoc/>
-        public T Content { get; }
+        public T Content { get; private set; }
 
         /// <inheritdoc/>
         public HttpResponseMessage HttpResponseMessage { get; }
 
         /// <inheritdoc/>
         public bool HasFailed => !HttpResponseMessage.IsSuccessStatusCode;
+
+        /// <inheritdoc/>
+        public void SetContent(T content)
+        {
+            this.Content = content;
+        }
     }
 }

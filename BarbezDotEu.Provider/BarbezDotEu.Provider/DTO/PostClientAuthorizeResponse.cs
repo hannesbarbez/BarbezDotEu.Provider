@@ -1,8 +1,7 @@
 ﻿// Copyright (c) Hannes Barbez. All rights reserved.
 // Licensed under the GNU General Public License v3.0
 
-using System.Net.Http;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace BarbezDotEu.Provider.DTO
 {
@@ -14,19 +13,19 @@ namespace BarbezDotEu.Provider.DTO
         /// <summary>
         /// Gets or sets the access token.
         /// </summary>
-        [JsonProperty("access_token")]
+        [JsonPropertyName("access_token")]
         public string AccessToken { get; set; }
 
         /// <summary>
         /// Gets or sets the token type.
         /// </summary>
-        [JsonProperty("token_type")]
+        [JsonPropertyName("token_type")]
         public string TokenType { get; set; }
 
         /// <summary>
         /// Gets or sets the authorization scope.
         /// </summary>
-        [JsonProperty("scope")]
+        [JsonPropertyName("scope")]
         public string Scope { get; set; }
 
         // Omitting implementation of "app" property.
