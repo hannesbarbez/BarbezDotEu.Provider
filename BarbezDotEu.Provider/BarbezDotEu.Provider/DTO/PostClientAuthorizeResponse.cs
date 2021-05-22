@@ -2,7 +2,6 @@
 // Licensed under the GNU General Public License v3.0
 
 using System.Net.Http;
-using BarbezDotEu.Provider.Interfaces;
 using Newtonsoft.Json;
 
 namespace BarbezDotEu.Provider.DTO
@@ -10,7 +9,7 @@ namespace BarbezDotEu.Provider.DTO
     /// <summary>
     /// Implements a client authorization response DTO in accordance to the interface as defined and shared by Vimeo, Twitter, and others.
     /// </summary>
-    public class PostClientAuthorizeResponse : ICanFail
+    public class PostClientAuthorizeResponse
     {
         /// <summary>
         /// Gets or sets the access token.
@@ -30,12 +29,6 @@ namespace BarbezDotEu.Provider.DTO
         [JsonProperty("scope")]
         public string Scope { get; set; }
 
-        /// <inheritdoc/>
-        public HttpResponseMessage FailedResponse { get; set; }
-
-        /// <inheritdoc/>
-        public bool HasFailed => FailedResponse != null;
-
-        // Omitting implementation of "app" property as not (yet) relevant.
+        // Omitting implementation of "app" property.
     }
 }

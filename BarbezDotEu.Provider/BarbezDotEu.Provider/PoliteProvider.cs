@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using BarbezDotEu.Http;
 using BarbezDotEu.Provider.Interfaces;
-using Marvin.StreamExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace BarbezDotEu.Provider
@@ -62,26 +61,16 @@ namespace BarbezDotEu.Provider
         /// <param name="request">The <see cref="HttpRequestMessage"/> to send to the third-party provider.</param>
         /// <param name="retryOnError"></param>
         /// <param name="waitingMinutesBeforeRetry">The number of minutes to wait before automatically retrying re-sending the request, if the intention is to retry again upon error.</param>
-        /// <returns>The expected response content type.</returns>
-        protected async Task<T> Request<T>(HttpRequestMessage request, bool retryOnError = true, double waitingMinutesBeforeRetry = 15)
-            where T : ICanFail
+        /// <returns>The expected response content type, as well as other metadata, in case of an exception.</returns>
+        protected async Task<PoliteReponse<T>> Request<T>(HttpRequestMessage request, bool retryOnError = true, double waitingMinutesBeforeRetry = 15)
+            where T : class
         {
-            // TODO: Extend ICanFail to ICanFail<T> so it will be far more generic, after adding a field specific property "public T DTO {get;set;}".
-
             try
             {
                 this.UpdateTimeOfLastCall(DateTime.UtcNow);
                 using var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
-                if (!response.IsSuccessStatusCode)
-                {
-                    var failed = (T)Activator.CreateInstance(typeof(T));
-                    failed.FailedResponse = response;
-                    return failed;
-                }
-
-                var stream = await response.Content.ReadAsStreamAsync();
-                var result = await stream.ReadAndDeserializeFromJsonAsync<T>();
-                return result;
+                var politeResponse = new PoliteReponse<T>(response);
+                return politeResponse;
             }
             catch (Exception exception)
             {
