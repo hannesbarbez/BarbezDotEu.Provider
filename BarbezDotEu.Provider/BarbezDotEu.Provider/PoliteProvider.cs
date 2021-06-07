@@ -24,7 +24,11 @@ namespace BarbezDotEu.Provider
         private DateTime lastQueryTime;
         private int requiredSecondsBetweenCalls;
         private readonly HttpClient httpClient;
-        private readonly ILogger logger;
+
+        /// <summary>
+        /// Gets or sets the <see cref="ILogger"/>.
+        /// </summary>
+        protected ILogger Logger { get; }
 
         /// <summary>
         /// Constructs a new <see cref="PoliteProvider"/>.
@@ -33,7 +37,7 @@ namespace BarbezDotEu.Provider
         /// <param name="httpClientFactory">The <see cref="IHttpClientFactory"/> to use.</param>
         public PoliteProvider(ILogger logger, IHttpClientFactory httpClientFactory)
         {
-            this.logger = logger;
+            this.Logger = logger;
             this.httpClient = httpClientFactory.CreateClient();
         }
 
@@ -89,7 +93,7 @@ namespace BarbezDotEu.Provider
             {
                 if (retryOnError)
                 {
-                    logger.LogWarning($"{nameof(PoliteProvider)} waiting {waitingMinutesBeforeRetry} minutes " +
+                    Logger.LogWarning($"{nameof(PoliteProvider)} waiting {waitingMinutesBeforeRetry} minutes " +
                         $"because of an exception occuring during a {typeof(T)} request. No crash, going to try again. Exception details:{Environment.NewLine}{exception}.");
 
                     Thread.Sleep(TimeSpan.FromMinutes(waitingMinutesBeforeRetry));

@@ -7,7 +7,7 @@
     <Product>BarbezDotEu.Provider</Product>
     <PackageId>BarbezDotEu.Provider</PackageId>
     <Copyright>©2021 Hannes Barbez</Copyright>
-    <Version>2.0.1</Version>
+    <Version>2.0.2</Version>
     <Description>This package contains a non-exhaustive, yet useful HTTP(S) client that supports rate limiting so that a polite integration with a third-party data provider can be implemented.</Description>
     <PackageTags>basic;polite;http;https;integration;third-party integration;provider;barbez</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
