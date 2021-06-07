@@ -6,7 +6,7 @@ using System.Net.Http;
 namespace BarbezDotEu.Provider.Interfaces
 {
     /// <summary>
-    /// Defines a <see cref="IPoliteResponse"/> to a <see cref="HttpRequestMessage"/> requested by an <see cref="IPoliteProvider"/>.
+    /// Defines a <see cref="IPoliteResponse{T}"/> to a <see cref="HttpRequestMessage"/> requested by an <see cref="IPoliteProvider"/>.
     /// </summary>
     public interface IPoliteResponse<T> where T : class
     {

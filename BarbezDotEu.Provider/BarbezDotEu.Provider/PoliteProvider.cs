@@ -24,7 +24,7 @@ namespace BarbezDotEu.Provider
         private DateTime lastQueryTime;
         private int requiredSecondsBetweenCalls;
         private readonly HttpClient httpClient;
-        protected readonly ILogger logger;
+        private readonly ILogger logger;
 
         /// <summary>
         /// Constructs a new <see cref="PoliteProvider"/>.
@@ -136,7 +136,7 @@ namespace BarbezDotEu.Provider
         /// The parameter string is expected to hold numeric values only.
         /// <see cref="SetRateLimitPerDay(string)"/> and <see cref="SetRateLimitPerMinute(string)"/> are mutually exclusive, and the one last calls determines the rate limiter.
         /// </remarks>
-        /// <param name="callsPerDayString">The max. number of allowed calls per minute.</param>
+        /// <param name="callsPerMinuteString">The max. number of allowed calls per minute.</param>
         protected void SetRateLimitPerMinute(string callsPerMinuteString)
         {
             var minuteInSeconds = 60;
