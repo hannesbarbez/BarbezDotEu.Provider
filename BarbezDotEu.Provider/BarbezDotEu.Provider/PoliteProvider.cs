@@ -68,7 +68,7 @@ namespace BarbezDotEu.Provider
         /// <param name="retryOnError"></param>
         /// <param name="waitingMinutesBeforeRetry">The number of minutes to wait before automatically retrying re-sending the request, if the intention is to retry again upon error.</param>
         /// <returns>The expected response content type, as well as other metadata, in case of an exception.</returns>
-        protected async Task<PoliteReponse<T>> Request<T>(HttpRequestMessage request, bool retryOnError = true, double waitingMinutesBeforeRetry = 15)
+        protected async virtual Task<PoliteReponse<T>> Request<T>(HttpRequestMessage request, bool retryOnError = true, double waitingMinutesBeforeRetry = 15)
             where T : class
         {
             try
