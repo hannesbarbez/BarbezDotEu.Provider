@@ -99,7 +99,7 @@ namespace BarbezDotEu.Provider.DTO
         /// <param name="host">The value to set for the host header. Defaults to the domain of the referrer, if none provided.</param>
         public EdgeMockingRequestHeaderCollection(string referrer, string host = null)
         {
-            var acceptHeaderJson = new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json);
+            var acceptHeaderJson = new MediaTypeWithQualityHeaderValue("application/json");
             var acceptHeaderText = new MediaTypeWithQualityHeaderValue(MediaTypeNames.Text.Plain);
             var acceptHeaderAnything = new MediaTypeWithQualityHeaderValue("*/*");
 

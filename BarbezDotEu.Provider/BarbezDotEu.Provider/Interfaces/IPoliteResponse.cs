@@ -13,17 +13,17 @@ namespace BarbezDotEu.Provider.Interfaces
         /// <summary>
         /// Gets the actual content of a successful response to a <see cref="HttpRequestMessage"/>.
         /// </summary>
-        public T Content { get; }
+        T Content { get; }
 
         /// <summary>
         /// Gets the <see cref="HttpRequestMessage"/> that indicates a fault that has occurred.
         /// </summary>
-        public HttpResponseMessage HttpResponseMessage { get; }
+        HttpResponseMessage HttpResponseMessage { get; }
 
         /// <summary>
         /// Gets a value indicating whether the <see cref="System.Net.Http.HttpResponseMessage"/> indicates a fault.
         /// </summary>
-        public bool HasFailed { get; }
+        bool HasFailed { get; }
 
         /// <summary>
         /// Sets the the actual response content.
