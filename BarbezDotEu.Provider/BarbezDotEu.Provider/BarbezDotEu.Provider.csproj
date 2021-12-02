@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Hannes Barbez</Authors>
     <Company>Hannes Barbez</Company>
     <Title>BarbezDotEu.Provider</Title>
     <Product>BarbezDotEu.Provider</Product>
     <PackageId>BarbezDotEu.Provider</PackageId>
     <Copyright>©2021 Hannes Barbez</Copyright>
-    <Version>2.2.0</Version>
+    <Version>3.0.0</Version>
     <Description>This package contains a non-exhaustive, yet useful HTTP(S) client that supports rate limiting so that a polite integration with a third-party data provider can be implemented.</Description>
     <PackageTags>basic;polite;http;https;integration;third-party integration;provider;barbez</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -21,9 +21,11 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="BarbezDotEu.Http" Version="1.0.0" />
+    <PackageReference Include="BarbezDotEu.Http" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+    <PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
+    <PackageReference Include="System.Text.Json" Version="6.0.0" />
   </ItemGroup>
   <PropertyGroup>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

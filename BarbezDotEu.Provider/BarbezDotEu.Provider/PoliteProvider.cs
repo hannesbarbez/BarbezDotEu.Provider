@@ -68,26 +68,28 @@ namespace BarbezDotEu.Provider
         /// <param name="retryOnError"></param>
         /// <param name="waitingMinutesBeforeRetry">The number of minutes to wait before automatically retrying re-sending the request, if the intention is to retry again upon error.</param>
         /// <returns>The expected response content type, as well as other metadata, in case of an exception.</returns>
-        protected async virtual Task<PoliteReponse<T>> Request<T>(HttpRequestMessage request, bool retryOnError = true, double waitingMinutesBeforeRetry = 15)
+        protected virtual async Task<PoliteReponse<T>> Request<T>(HttpRequestMessage request, bool retryOnError = true, double waitingMinutesBeforeRetry = 15)
             where T : class
         {
             try
             {
                 this.UpdateTimeOfLastCall(DateTime.UtcNow);
-                using var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
-                var politeResponse = new PoliteReponse<T>(response);
-                var options = new JsonSerializerOptions
+                using (var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
                 {
-                    PropertyNameCaseInsensitive = true,
-                };
+                    var politeResponse = new PoliteReponse<T>(response);
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true,
+                    };
 
-                var content = await response.Content.ReadFromJsonAsync<T>(options);
+                    var content = await response.Content.ReadFromJsonAsync<T>(options);
 
-                // For Blazor, no "actual" DDD since needs async and constructors don't do async.
-                // https://docs.microsoft.com/en-us/aspnet/core/blazor/call-web-api?view=aspnetcore-5.0 
-                politeResponse.SetContent(content);
+                    // For Blazor, no "actual" DDD since needs async and constructors don't do async.
+                    // https://docs.microsoft.com/en-us/aspnet/core/blazor/call-web-api?view=aspnetcore-5.0 
+                    politeResponse.SetContent(content);
 
-                return politeResponse;
+                    return politeResponse;
+                }
             }
             catch (Exception exception)
             {
