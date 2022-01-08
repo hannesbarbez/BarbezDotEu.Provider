@@ -82,11 +82,21 @@ namespace BarbezDotEu.Provider
                         PropertyNameCaseInsensitive = true,
                     };
 
-                    var content = await response.Content.ReadFromJsonAsync<T>(options);
+                    try
+                    {
+                        var content = await response.Content.ReadFromJsonAsync<T>(options);
 
-                    // For Blazor, no "actual" DDD since needs async and constructors don't do async.
-                    // https://docs.microsoft.com/en-us/aspnet/core/blazor/call-web-api?view=aspnetcore-5.0 
-                    politeResponse.SetContent(content);
+                        // For Blazor, no "actual" DDD since needs async and constructors don't do async.
+                        // https://docs.microsoft.com/en-us/aspnet/core/blazor/call-web-api?view=aspnetcore-5.0 
+                        politeResponse.SetContent(content);
+                    }
+                    catch (JsonException exception)
+                    {
+                        Logger.LogWarning($"{nameof(PoliteProvider)} expected JSON but got something else: " +
+                            $"{await response.Content.ReadAsStringAsync()}.{Environment.NewLine}" +
+                            $"Exception details: {exception}.");
+                        throw;
+                    }
 
                     return politeResponse;
                 }
@@ -99,7 +109,7 @@ namespace BarbezDotEu.Provider
                         $"because of an exception occuring during a {typeof(T)} request. No crash, going to try again. Exception details:{Environment.NewLine}{exception}.");
 
                     Thread.Sleep(TimeSpan.FromMinutes(waitingMinutesBeforeRetry));
-                    var newRequest = await HttpRequestMessageCloner.Clone(request);
+                    var newRequest = await request.Clone();
                     return await Request<T>(newRequest, false);
                 }
 
