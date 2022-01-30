@@ -76,29 +76,7 @@ namespace BarbezDotEu.Provider
                 this.UpdateTimeOfLastCall(DateTime.UtcNow);
                 using (var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
                 {
-                    var politeResponse = new PoliteReponse<T>(response);
-                    var options = new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true,
-                    };
-
-                    try
-                    {
-                        var content = await response.Content.ReadFromJsonAsync<T>(options);
-
-                        // For Blazor, no "actual" DDD since needs async and constructors don't do async.
-                        // https://docs.microsoft.com/en-us/aspnet/core/blazor/call-web-api?view=aspnetcore-5.0 
-                        politeResponse.SetContent(content);
-                    }
-                    catch (JsonException exception)
-                    {
-                        Logger.LogWarning($"{nameof(PoliteProvider)} expected JSON but got something else: " +
-                            $"{await response.Content.ReadAsStringAsync()}.{Environment.NewLine}" +
-                            $"Exception details: {exception}.");
-                        throw;
-                    }
-
-                    return politeResponse;
+                    return await GetPoliteResponse<T>(response);
                 }
             }
             catch (Exception exception)
@@ -115,6 +93,47 @@ namespace BarbezDotEu.Provider
 
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Converts a <see cref="HttpResponseMessage"/> into a <see cref="PoliteReponse{T}"/>.
+        /// </summary>
+        /// <typeparam name="T">The view model to deserialize a successful response into.</typeparam>
+        /// <param name="response">The response to convert.</param>
+        /// <returns>The <see cref="HttpResponseMessage"/> as <see cref="PoliteReponse{T}"/>.</returns>
+        private async Task<PoliteReponse<T>> GetPoliteResponse<T>(HttpResponseMessage response) where T : class
+        {
+            var politeResponse = new PoliteReponse<T>(response);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+            };
+
+            if (response.IsSuccessStatusCode)
+            {
+                try
+                {
+                    // TODO for next version: also support non-JSON versions.
+                    var content = await response.Content.ReadFromJsonAsync<T>(options);
+
+                    // For Blazor, no "actual" DDD since needs async and constructors don't do async.
+                    // https://docs.microsoft.com/en-us/aspnet/core/blazor/call-web-api?view=aspnetcore-5.0 
+                    politeResponse.SetContent(content);
+                }
+                catch (JsonException exception)
+                {
+                    Logger.LogWarning($"{nameof(PoliteProvider)} expected JSON but got something else: " +
+                        $"{await response.Content.ReadAsStringAsync()}.{Environment.NewLine}" +
+                        $"Exception details: {exception}.");
+                    throw;
+                }
+            }
+            else
+            {
+                Logger.LogWarning($"Unsuccessful response: HTTP code {response.StatusCode} - {response.ReasonPhrase}.");
+            }
+
+            return politeResponse;
         }
 
         /// <summary>
