@@ -113,7 +113,6 @@ namespace BarbezDotEu.Provider
             {
                 try
                 {
-                    // TODO for next version: also support non-JSON versions.
                     var content = await response.Content.ReadFromJsonAsync<T>(options);
 
                     // For Blazor, no "actual" DDD since needs async and constructors don't do async.
