@@ -152,10 +152,10 @@ namespace BarbezDotEu.Provider
         /// </summary>
         /// <remarks>
         /// The parameter string is expected to hold numeric values only.
-        /// <see cref="SetRateLimitPerDay(int)"/> and <see cref="SetRateLimitPerMinute(int)"/> are mutually exclusive, and the one last calls determines the rate limiter.
+        /// <see cref="SetRateLimitPerDay(long)"/> and <see cref="SetRateLimitPerMinute(long)"/> are mutually exclusive, and the one last calls determines the rate limiter.
         /// </remarks>
         /// <param name="callsPerDay">The max. number of allowed calls per day.</param>
-        protected void SetRateLimitPerDay(int callsPerDay)
+        protected void SetRateLimitPerDay(long callsPerDay)
         {
             // 1 day = 500 calls => 86400" = (1 day * 24 * 60 * 60)
             double dayInSeconds = 86400;
@@ -167,10 +167,10 @@ namespace BarbezDotEu.Provider
         /// </summary>
         /// <remarks>
         /// The parameter string is expected to hold numeric values only.
-        /// <see cref="SetRateLimitPerDay(int)"/> and <see cref="SetRateLimitPerMinute(int)"/> are mutually exclusive, and the one last calls determines the rate limiter.
+        /// <see cref="SetRateLimitPerDay(long)"/> and <see cref="SetRateLimitPerMinute(long)"/> are mutually exclusive, and the one last calls determines the rate limiter.
         /// </remarks>
         /// <param name="callsPerMinute">The max. number of allowed calls per minute.</param>
-        protected void SetRateLimitPerMinute(int callsPerMinute)
+        protected void SetRateLimitPerMinute(long callsPerMinute)
         {
             double minuteInSeconds = 60;
             this.requiredSecondsBetweenCalls = (int)Math.Ceiling(minuteInSeconds / callsPerMinute);
