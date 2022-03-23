@@ -152,14 +152,13 @@ namespace BarbezDotEu.Provider
         /// </summary>
         /// <remarks>
         /// The parameter string is expected to hold numeric values only.
-        /// <see cref="SetRateLimitPerDay(string)"/> and <see cref="SetRateLimitPerMinute(string)"/> are mutually exclusive, and the one last calls determines the rate limiter.
+        /// <see cref="SetRateLimitPerDay(int)"/> and <see cref="SetRateLimitPerMinute(int)"/> are mutually exclusive, and the one last calls determines the rate limiter.
         /// </remarks>
-        /// <param name="callsPerDayString">The max. number of allowed calls per day.</param>
-        protected void SetRateLimitPerDay(string callsPerDayString)
+        /// <param name="callsPerDay">The max. number of allowed calls per day.</param>
+        protected void SetRateLimitPerDay(int callsPerDay)
         {
             // 1 day = 500 calls => 86400" = (1 day * 24 * 60 * 60)
             double dayInSeconds = 86400;
-            var callsPerDay = double.Parse(callsPerDayString);
             this.requiredSecondsBetweenCalls = (int)Math.Ceiling(dayInSeconds / callsPerDay);
         }
 
@@ -168,13 +167,12 @@ namespace BarbezDotEu.Provider
         /// </summary>
         /// <remarks>
         /// The parameter string is expected to hold numeric values only.
-        /// <see cref="SetRateLimitPerDay(string)"/> and <see cref="SetRateLimitPerMinute(string)"/> are mutually exclusive, and the one last calls determines the rate limiter.
+        /// <see cref="SetRateLimitPerDay(int)"/> and <see cref="SetRateLimitPerMinute(int)"/> are mutually exclusive, and the one last calls determines the rate limiter.
         /// </remarks>
-        /// <param name="callsPerMinuteString">The max. number of allowed calls per minute.</param>
-        protected void SetRateLimitPerMinute(string callsPerMinuteString)
+        /// <param name="callsPerMinute">The max. number of allowed calls per minute.</param>
+        protected void SetRateLimitPerMinute(int callsPerMinute)
         {
-            var minuteInSeconds = 60;
-            var callsPerMinute = double.Parse(callsPerMinuteString);
+            double minuteInSeconds = 60;
             this.requiredSecondsBetweenCalls = (int)Math.Ceiling(minuteInSeconds / callsPerMinute);
         }
     }
