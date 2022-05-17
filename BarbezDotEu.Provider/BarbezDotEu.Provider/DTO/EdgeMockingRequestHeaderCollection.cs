@@ -104,7 +104,7 @@ namespace BarbezDotEu.Provider.DTO
             var acceptHeaderAnything = new MediaTypeWithQualityHeaderValue("*/*");
 
             this.AcceptHeaders = new[] { acceptHeaderJson, acceptHeaderText, acceptHeaderAnything };
-            this.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36 Edg/93.0.961.44";
+            this.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36 Edg/101.0.1210.47";
             this.AcceptLanguage = new StringWithQualityHeaderValue("en-US", 0.9);
             this.Referrer = new Uri(referrer);
             this.CacheControl = new CacheControlHeaderValue() { NoCache = true };
