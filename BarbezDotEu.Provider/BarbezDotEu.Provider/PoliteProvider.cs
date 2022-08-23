@@ -22,13 +22,23 @@ namespace BarbezDotEu.Provider
         // Defines by how much to multiply the requiredSecondsbetweenCalls, if case calls are not done with regular intervals.
         private long multiplier = 1;
         private DateTime lastQueryTime;
-        private int requiredSecondsBetweenCalls;
-        private readonly HttpClient httpClient;
+
+        // 1 day = 86400" = (1 day * 24 * 60 * 60)
+        private const double OneDayInSeconds = 86400;
+        private const double OneMinuteInSeconds = 60;
+        private const double OneHourInSeconds = 3600;
 
         /// <summary>
         /// Gets or sets the <see cref="ILogger"/>.
         /// </summary>
         protected ILogger Logger { get; }
+
+        private readonly IHttpClientFactory httpClientFactory;
+
+        /// <summary>
+        /// Gets the number of seconds required to lapse before a next call to the data provider is considered polite.
+        /// </summary>
+        protected int RequiredSecondsInBetweenCalls { get; private set; }
 
         /// <summary>
         /// Constructs a new <see cref="PoliteProvider"/>.
@@ -38,14 +48,14 @@ namespace BarbezDotEu.Provider
         public PoliteProvider(ILogger logger, IHttpClientFactory httpClientFactory)
         {
             this.Logger = logger;
-            this.httpClient = httpClientFactory.CreateClient();
+            this.httpClientFactory = httpClientFactory;
         }
 
         /// <inheritdoc/>
         public bool IsPolite()
         {
             var delta = (DateTime.UtcNow - this.lastQueryTime).TotalSeconds;
-            if (delta < requiredSecondsBetweenCalls * multiplier)
+            if (delta < RequiredSecondsInBetweenCalls * multiplier)
             {
                 return false;
             }
@@ -74,7 +84,8 @@ namespace BarbezDotEu.Provider
             try
             {
                 this.UpdateTimeOfLastCall(DateTime.UtcNow);
-                using (var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
+                var httpClient = this.httpClientFactory.CreateClient();
+                using (var response = await httpClient.SendAsync(request))
                 {
                     return await GetPoliteResponse<T>(response);
                 }
@@ -152,14 +163,12 @@ namespace BarbezDotEu.Provider
         /// </summary>
         /// <remarks>
         /// The parameter string is expected to hold numeric values only.
-        /// <see cref="SetRateLimitPerDay(long)"/> and <see cref="SetRateLimitPerMinute(long)"/> are mutually exclusive, and the one last calls determines the rate limiter.
+        /// <see cref="SetRateLimitPerDay(long)"/>, <see cref="SetRateLimitPerHour(long)"/>, and <see cref="SetRateLimitPerMinute(long)"/> are mutually exclusive, hence the last called method determines the rate limiter.
         /// </remarks>
         /// <param name="callsPerDay">The max. number of allowed calls per day.</param>
         protected void SetRateLimitPerDay(long callsPerDay)
         {
-            // 1 day = 500 calls => 86400" = (1 day * 24 * 60 * 60)
-            double dayInSeconds = 86400;
-            this.requiredSecondsBetweenCalls = (int)Math.Ceiling(dayInSeconds / callsPerDay);
+            this.RequiredSecondsInBetweenCalls = (int)Math.Ceiling(OneDayInSeconds / callsPerDay);
         }
 
         /// <summary>
@@ -167,13 +176,25 @@ namespace BarbezDotEu.Provider
         /// </summary>
         /// <remarks>
         /// The parameter string is expected to hold numeric values only.
-        /// <see cref="SetRateLimitPerDay(long)"/> and <see cref="SetRateLimitPerMinute(long)"/> are mutually exclusive, and the one last calls determines the rate limiter.
+        /// <see cref="SetRateLimitPerDay(long)"/>, <see cref="SetRateLimitPerHour(long)"/>, and <see cref="SetRateLimitPerMinute(long)"/> are mutually exclusive, hence the last called method determines the rate limiter.
         /// </remarks>
         /// <param name="callsPerMinute">The max. number of allowed calls per minute.</param>
         protected void SetRateLimitPerMinute(long callsPerMinute)
         {
-            double minuteInSeconds = 60;
-            this.requiredSecondsBetweenCalls = (int)Math.Ceiling(minuteInSeconds / callsPerMinute);
+            this.RequiredSecondsInBetweenCalls = (int)Math.Ceiling(OneMinuteInSeconds / callsPerMinute);
+        }
+
+        /// <summary>
+        /// Sets the number of calls per hour as allowed to the provider, i.e. third-party resource.
+        /// </summary>
+        /// <remarks>
+        /// The parameter string is expected to hold numeric values only.
+        /// <see cref="SetRateLimitPerDay(long)"/>, <see cref="SetRateLimitPerHour(long)"/>, and <see cref="SetRateLimitPerMinute(long)"/> are mutually exclusive, hence the last called method determines the rate limiter.
+        /// </remarks>
+        /// <param name="callsPerHour">The max. number of allowed calls per hour.</param>
+        protected void SetRateLimitPerHour(long callsPerHour)
+        {
+            this.RequiredSecondsInBetweenCalls = (int)Math.Ceiling(OneHourInSeconds / callsPerHour);
         }
     }
 }
