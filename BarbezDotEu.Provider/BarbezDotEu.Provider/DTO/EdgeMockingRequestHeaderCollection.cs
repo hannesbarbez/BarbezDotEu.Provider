@@ -21,14 +21,14 @@ namespace BarbezDotEu.Provider.DTO
     public class EdgeMockingRequestHeaderCollection
     {
         /// <summary>
+        /// Gets an Edge style user agent header.
+        /// </summary>
+        public const string UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 Edg/105.0.1343.33";
+
+        /// <summary>
         /// Gets Edge style accept headers.
         /// </summary>
         public MediaTypeWithQualityHeaderValue[] AcceptHeaders { get; }
-
-        /// <summary>
-        /// Gets an Edge style user agent header.
-        /// </summary>
-        public string UserAgent { get; }
 
         /// <summary>
         /// Gets an Edge style accept header.
@@ -59,7 +59,7 @@ namespace BarbezDotEu.Provider.DTO
             httpRequestMessage.Headers.CacheControl = this.CacheControl;
             httpRequestMessage.Headers.Pragma.Add(this.Pragma);
             httpRequestMessage.Headers.Connection.Add(this.Connection);
-            httpRequestMessage.Headers.Add("User-Agent", this.UserAgent);
+            httpRequestMessage.Headers.Add("User-Agent", UserAgent);
             httpRequestMessage.Headers.Host = this.Host;
 
             foreach (var header in this.Others)
@@ -104,7 +104,6 @@ namespace BarbezDotEu.Provider.DTO
             var acceptHeaderAnything = new MediaTypeWithQualityHeaderValue("*/*");
 
             this.AcceptHeaders = new[] { acceptHeaderJson, acceptHeaderText, acceptHeaderAnything };
-            this.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36 Edg/101.0.1210.47";
             this.AcceptLanguage = new StringWithQualityHeaderValue("en-US", 0.9);
             this.Referrer = new Uri(referrer);
             this.CacheControl = new CacheControlHeaderValue() { NoCache = true };
