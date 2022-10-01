@@ -132,8 +132,9 @@ namespace BarbezDotEu.Provider
                 }
                 catch (JsonException exception)
                 {
+                    var contents = await response.Content.ReadAsStringAsync();
                     Logger.LogWarning($"{nameof(PoliteProvider)} expected JSON but got something else: " +
-                        $"{await response.Content.ReadAsStringAsync()}.{Environment.NewLine}" +
+                        $"{contents}.{Environment.NewLine}" +
                         $"Exception details: {exception}.");
                     throw;
                 }
