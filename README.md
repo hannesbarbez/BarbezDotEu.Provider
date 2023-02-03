@@ -3,17 +3,6 @@
 
 ## Contents
 
-- [EdgeMockingRequestHeaderCollection](#T-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection 'BarbezDotEu.Provider.DTO.EdgeMockingRequestHeaderCollection')
-  - [#ctor(referrer)](#M-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection-#ctor-System-String- 'BarbezDotEu.Provider.DTO.EdgeMockingRequestHeaderCollection.#ctor(System.String)')
-  - [AcceptHeaders](#P-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection-AcceptHeaders 'BarbezDotEu.Provider.DTO.EdgeMockingRequestHeaderCollection.AcceptHeaders')
-  - [AcceptLanguage](#P-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection-AcceptLanguage 'BarbezDotEu.Provider.DTO.EdgeMockingRequestHeaderCollection.AcceptLanguage')
-  - [CacheControl](#P-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection-CacheControl 'BarbezDotEu.Provider.DTO.EdgeMockingRequestHeaderCollection.CacheControl')
-  - [Connection](#P-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection-Connection 'BarbezDotEu.Provider.DTO.EdgeMockingRequestHeaderCollection.Connection')
-  - [Others](#P-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection-Others 'BarbezDotEu.Provider.DTO.EdgeMockingRequestHeaderCollection.Others')
-  - [Pragma](#P-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection-Pragma 'BarbezDotEu.Provider.DTO.EdgeMockingRequestHeaderCollection.Pragma')
-  - [Referrer](#P-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection-Referrer 'BarbezDotEu.Provider.DTO.EdgeMockingRequestHeaderCollection.Referrer')
-  - [UserAgent](#P-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection-UserAgent 'BarbezDotEu.Provider.DTO.EdgeMockingRequestHeaderCollection.UserAgent')
-  - [Prep(httpRequestMessage)](#M-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection-Prep-System-Net-Http-HttpRequestMessage- 'BarbezDotEu.Provider.DTO.EdgeMockingRequestHeaderCollection.Prep(System.Net.Http.HttpRequestMessage)')
 - [IPoliteProvider](#T-BarbezDotEu-Provider-Interfaces-IPoliteProvider 'BarbezDotEu.Provider.Interfaces.IPoliteProvider')
   - [IsPolite()](#M-BarbezDotEu-Provider-Interfaces-IPoliteProvider-IsPolite 'BarbezDotEu.Provider.Interfaces.IPoliteProvider.IsPolite')
   - [SetMultiplier()](#M-BarbezDotEu-Provider-Interfaces-IPoliteProvider-SetMultiplier-System-Int64- 'BarbezDotEu.Provider.Interfaces.IPoliteProvider.SetMultiplier(System.Int64)')
@@ -24,11 +13,15 @@
   - [SetContent(content)](#M-BarbezDotEu-Provider-Interfaces-IPoliteResponse`1-SetContent-`0- 'BarbezDotEu.Provider.Interfaces.IPoliteResponse`1.SetContent(`0)')
 - [PoliteProvider](#T-BarbezDotEu-Provider-PoliteProvider 'BarbezDotEu.Provider.PoliteProvider')
   - [#ctor(logger,httpClientFactory)](#M-BarbezDotEu-Provider-PoliteProvider-#ctor-Microsoft-Extensions-Logging-ILogger,System-Net-Http-IHttpClientFactory- 'BarbezDotEu.Provider.PoliteProvider.#ctor(Microsoft.Extensions.Logging.ILogger,System.Net.Http.IHttpClientFactory)')
+  - [Logger](#P-BarbezDotEu-Provider-PoliteProvider-Logger 'BarbezDotEu.Provider.PoliteProvider.Logger')
+  - [RequiredSecondsInBetweenCalls](#P-BarbezDotEu-Provider-PoliteProvider-RequiredSecondsInBetweenCalls 'BarbezDotEu.Provider.PoliteProvider.RequiredSecondsInBetweenCalls')
+  - [GetPoliteResponse\`\`1(response)](#M-BarbezDotEu-Provider-PoliteProvider-GetPoliteResponse``1-System-Net-Http-HttpResponseMessage- 'BarbezDotEu.Provider.PoliteProvider.GetPoliteResponse``1(System.Net.Http.HttpResponseMessage)')
   - [IsPolite()](#M-BarbezDotEu-Provider-PoliteProvider-IsPolite 'BarbezDotEu.Provider.PoliteProvider.IsPolite')
   - [Request\`\`1(request,retryOnError,waitingMinutesBeforeRetry)](#M-BarbezDotEu-Provider-PoliteProvider-Request``1-System-Net-Http-HttpRequestMessage,System-Boolean,System-Double- 'BarbezDotEu.Provider.PoliteProvider.Request``1(System.Net.Http.HttpRequestMessage,System.Boolean,System.Double)')
   - [SetMultiplier()](#M-BarbezDotEu-Provider-PoliteProvider-SetMultiplier-System-Int64- 'BarbezDotEu.Provider.PoliteProvider.SetMultiplier(System.Int64)')
-  - [SetRateLimitPerDay(callsPerDayString)](#M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerDay-System-String- 'BarbezDotEu.Provider.PoliteProvider.SetRateLimitPerDay(System.String)')
-  - [SetRateLimitPerMinute(callsPerDayString)](#M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerMinute-System-String- 'BarbezDotEu.Provider.PoliteProvider.SetRateLimitPerMinute(System.String)')
+  - [SetRateLimitPerDay(callsPerDay)](#M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerDay-System-Int64- 'BarbezDotEu.Provider.PoliteProvider.SetRateLimitPerDay(System.Int64)')
+  - [SetRateLimitPerHour(callsPerHour)](#M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerHour-System-Int64- 'BarbezDotEu.Provider.PoliteProvider.SetRateLimitPerHour(System.Int64)')
+  - [SetRateLimitPerMinute(callsPerMinute)](#M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerMinute-System-Int64- 'BarbezDotEu.Provider.PoliteProvider.SetRateLimitPerMinute(System.Int64)')
   - [UpdateTimeOfLastCall(lastQueryTime)](#M-BarbezDotEu-Provider-PoliteProvider-UpdateTimeOfLastCall-System-DateTime- 'BarbezDotEu.Provider.PoliteProvider.UpdateTimeOfLastCall(System.DateTime)')
 - [PoliteReponse\`1](#T-BarbezDotEu-Provider-PoliteReponse`1 'BarbezDotEu.Provider.PoliteReponse`1')
   - [#ctor(httpResponseMessage)](#M-BarbezDotEu-Provider-PoliteReponse`1-#ctor-System-Net-Http-HttpResponseMessage- 'BarbezDotEu.Provider.PoliteReponse`1.#ctor(System.Net.Http.HttpResponseMessage)')
@@ -40,110 +33,6 @@
   - [AccessToken](#P-BarbezDotEu-Provider-DTO-PostClientAuthorizeResponse-AccessToken 'BarbezDotEu.Provider.DTO.PostClientAuthorizeResponse.AccessToken')
   - [Scope](#P-BarbezDotEu-Provider-DTO-PostClientAuthorizeResponse-Scope 'BarbezDotEu.Provider.DTO.PostClientAuthorizeResponse.Scope')
   - [TokenType](#P-BarbezDotEu-Provider-DTO-PostClientAuthorizeResponse-TokenType 'BarbezDotEu.Provider.DTO.PostClientAuthorizeResponse.TokenType')
-
-<a name='T-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection'></a>
-## EdgeMockingRequestHeaderCollection `type`
-
-##### Namespace
-
-BarbezDotEu.Provider.DTO
-
-##### Summary
-
-Mocks headers that would've been sent typically by Microsoft Edge during the first half of 2021.
-
-##### Remarks
-
-The purpose of this class is to be used by a provider when said provider does not want to look too much like a bot.
-How can a bot not look like a bot? By, for example, looking like Edge instead.
-
-Note: The correct MO is to use your application's actual name in the HTTP headers.
-
-<a name='M-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection-#ctor-System-String-'></a>
-### #ctor(referrer) `constructor`
-
-##### Summary
-
-Constructs a new [EdgeMockingRequestHeaderCollection](#T-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection 'BarbezDotEu.Provider.DTO.EdgeMockingRequestHeaderCollection').
-
-##### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| referrer | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The referrer to set. |
-
-<a name='P-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection-AcceptHeaders'></a>
-### AcceptHeaders `property`
-
-##### Summary
-
-Gets Edge style accept headers.
-
-<a name='P-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection-AcceptLanguage'></a>
-### AcceptLanguage `property`
-
-##### Summary
-
-Gets an Edge style accept header.
-
-<a name='P-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection-CacheControl'></a>
-### CacheControl `property`
-
-##### Summary
-
-Gets an Edge style cache-control header.
-
-<a name='P-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection-Connection'></a>
-### Connection `property`
-
-##### Summary
-
-Gets an Edge style connection header.
-
-<a name='P-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection-Others'></a>
-### Others `property`
-
-##### Summary
-
-Gets a collection of non-standard headers, including:
-- Edge style do-not-track header;
-- Edge style sec-fetch-site header;
-- Edge style sec-fetch-mode header;
-- Edge style sec-fetch-dest header.
-
-<a name='P-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection-Pragma'></a>
-### Pragma `property`
-
-##### Summary
-
-Gets an Edge style pragma header.
-
-<a name='P-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection-Referrer'></a>
-### Referrer `property`
-
-##### Summary
-
-Gets an Edge style referrer header.
-
-<a name='P-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection-UserAgent'></a>
-### UserAgent `property`
-
-##### Summary
-
-Gets an Edge style user agent header.
-
-<a name='M-BarbezDotEu-Provider-DTO-EdgeMockingRequestHeaderCollection-Prep-System-Net-Http-HttpRequestMessage-'></a>
-### Prep(httpRequestMessage) `method`
-
-##### Summary
-
-Prepares a given [HttpRequestMessage](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Net.Http.HttpRequestMessage 'System.Net.Http.HttpRequestMessage') with headers sent typically by Microsoft Edge during the first half of 2021.
-
-##### Parameters
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| httpRequestMessage | [System.Net.Http.HttpRequestMessage](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Net.Http.HttpRequestMessage 'System.Net.Http.HttpRequestMessage') | The [HttpRequestMessage](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Net.Http.HttpRequestMessage 'System.Net.Http.HttpRequestMessage') to adjust. |
 
 <a name='T-BarbezDotEu-Provider-Interfaces-IPoliteProvider'></a>
 ## IPoliteProvider `type`
@@ -199,7 +88,7 @@ BarbezDotEu.Provider.Interfaces
 
 ##### Summary
 
-Defines a [](#!-IPoliteResponse 'IPoliteResponse') to a [HttpRequestMessage](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Net.Http.HttpRequestMessage 'System.Net.Http.HttpRequestMessage') requested by an [IPoliteProvider](#T-BarbezDotEu-Provider-Interfaces-IPoliteProvider 'BarbezDotEu.Provider.Interfaces.IPoliteProvider').
+Defines a [IPoliteResponse\`1](#T-BarbezDotEu-Provider-Interfaces-IPoliteResponse`1 'BarbezDotEu.Provider.Interfaces.IPoliteResponse`1') to a [HttpRequestMessage](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Net.Http.HttpRequestMessage 'System.Net.Http.HttpRequestMessage') requested by an [IPoliteProvider](#T-BarbezDotEu-Provider-Interfaces-IPoliteProvider 'BarbezDotEu.Provider.Interfaces.IPoliteProvider').
 
 <a name='P-BarbezDotEu-Provider-Interfaces-IPoliteResponse`1-Content'></a>
 ### Content `property`
@@ -261,6 +150,43 @@ Constructs a new [PoliteProvider](#T-BarbezDotEu-Provider-PoliteProvider 'Barbez
 | logger | [Microsoft.Extensions.Logging.ILogger](#T-Microsoft-Extensions-Logging-ILogger 'Microsoft.Extensions.Logging.ILogger') | A [ILogger](#T-Microsoft-Extensions-Logging-ILogger 'Microsoft.Extensions.Logging.ILogger') to use for logging. |
 | httpClientFactory | [System.Net.Http.IHttpClientFactory](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Net.Http.IHttpClientFactory 'System.Net.Http.IHttpClientFactory') | The [IHttpClientFactory](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Net.Http.IHttpClientFactory 'System.Net.Http.IHttpClientFactory') to use. |
 
+<a name='P-BarbezDotEu-Provider-PoliteProvider-Logger'></a>
+### Logger `property`
+
+##### Summary
+
+Gets or sets the [ILogger](#T-Microsoft-Extensions-Logging-ILogger 'Microsoft.Extensions.Logging.ILogger').
+
+<a name='P-BarbezDotEu-Provider-PoliteProvider-RequiredSecondsInBetweenCalls'></a>
+### RequiredSecondsInBetweenCalls `property`
+
+##### Summary
+
+Gets the number of seconds required to lapse before a next call to the data provider is considered polite.
+
+<a name='M-BarbezDotEu-Provider-PoliteProvider-GetPoliteResponse``1-System-Net-Http-HttpResponseMessage-'></a>
+### GetPoliteResponse\`\`1(response) `method`
+
+##### Summary
+
+Converts a [HttpResponseMessage](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Net.Http.HttpResponseMessage 'System.Net.Http.HttpResponseMessage') into a [PoliteReponse\`1](#T-BarbezDotEu-Provider-PoliteReponse`1 'BarbezDotEu.Provider.PoliteReponse`1').
+
+##### Returns
+
+The [HttpResponseMessage](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Net.Http.HttpResponseMessage 'System.Net.Http.HttpResponseMessage') as [PoliteReponse\`1](#T-BarbezDotEu-Provider-PoliteReponse`1 'BarbezDotEu.Provider.PoliteReponse`1').
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| response | [System.Net.Http.HttpResponseMessage](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Net.Http.HttpResponseMessage 'System.Net.Http.HttpResponseMessage') | The response to convert. |
+
+##### Generic Types
+
+| Name | Description |
+| ---- | ----------- |
+| T | The view model to deserialize a successful response into. |
+
 <a name='M-BarbezDotEu-Provider-PoliteProvider-IsPolite'></a>
 ### IsPolite() `method`
 
@@ -308,8 +234,8 @@ The expected response content type, as well as other metadata, in case of an exc
 
 This method has no parameters.
 
-<a name='M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerDay-System-String-'></a>
-### SetRateLimitPerDay(callsPerDayString) `method`
+<a name='M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerDay-System-Int64-'></a>
+### SetRateLimitPerDay(callsPerDay) `method`
 
 ##### Summary
 
@@ -319,15 +245,33 @@ Sets the number of calls per day as allowed to the provider, i.e. third-party re
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| callsPerDayString | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The max. number of allowed calls per day. |
+| callsPerDay | [System.Int64](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int64 'System.Int64') | The max. number of allowed calls per day. |
 
 ##### Remarks
 
 The parameter string is expected to hold numeric values only.
-[SetRateLimitPerDay](#M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerDay-System-String- 'BarbezDotEu.Provider.PoliteProvider.SetRateLimitPerDay(System.String)') and [SetRateLimitPerMinute](#M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerMinute-System-String- 'BarbezDotEu.Provider.PoliteProvider.SetRateLimitPerMinute(System.String)') are mutually exclusive, and the one last calls determines the rate limiter.
+[SetRateLimitPerDay](#M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerDay-System-Int64- 'BarbezDotEu.Provider.PoliteProvider.SetRateLimitPerDay(System.Int64)'), [SetRateLimitPerHour](#M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerHour-System-Int64- 'BarbezDotEu.Provider.PoliteProvider.SetRateLimitPerHour(System.Int64)'), and [SetRateLimitPerMinute](#M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerMinute-System-Int64- 'BarbezDotEu.Provider.PoliteProvider.SetRateLimitPerMinute(System.Int64)') are mutually exclusive, hence the last called method determines the rate limiter.
 
-<a name='M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerMinute-System-String-'></a>
-### SetRateLimitPerMinute(callsPerDayString) `method`
+<a name='M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerHour-System-Int64-'></a>
+### SetRateLimitPerHour(callsPerHour) `method`
+
+##### Summary
+
+Sets the number of calls per hour as allowed to the provider, i.e. third-party resource.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| callsPerHour | [System.Int64](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int64 'System.Int64') | The max. number of allowed calls per hour. |
+
+##### Remarks
+
+The parameter string is expected to hold numeric values only.
+[SetRateLimitPerDay](#M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerDay-System-Int64- 'BarbezDotEu.Provider.PoliteProvider.SetRateLimitPerDay(System.Int64)'), [SetRateLimitPerHour](#M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerHour-System-Int64- 'BarbezDotEu.Provider.PoliteProvider.SetRateLimitPerHour(System.Int64)'), and [SetRateLimitPerMinute](#M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerMinute-System-Int64- 'BarbezDotEu.Provider.PoliteProvider.SetRateLimitPerMinute(System.Int64)') are mutually exclusive, hence the last called method determines the rate limiter.
+
+<a name='M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerMinute-System-Int64-'></a>
+### SetRateLimitPerMinute(callsPerMinute) `method`
 
 ##### Summary
 
@@ -337,12 +281,12 @@ Sets the number of calls per minute as allowed to the provider, i.e. third-party
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| callsPerDayString | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The max. number of allowed calls per minute. |
+| callsPerMinute | [System.Int64](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Int64 'System.Int64') | The max. number of allowed calls per minute. |
 
 ##### Remarks
 
 The parameter string is expected to hold numeric values only.
-[SetRateLimitPerDay](#M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerDay-System-String- 'BarbezDotEu.Provider.PoliteProvider.SetRateLimitPerDay(System.String)') and [SetRateLimitPerMinute](#M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerMinute-System-String- 'BarbezDotEu.Provider.PoliteProvider.SetRateLimitPerMinute(System.String)') are mutually exclusive, and the one last calls determines the rate limiter.
+[SetRateLimitPerDay](#M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerDay-System-Int64- 'BarbezDotEu.Provider.PoliteProvider.SetRateLimitPerDay(System.Int64)'), [SetRateLimitPerHour](#M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerHour-System-Int64- 'BarbezDotEu.Provider.PoliteProvider.SetRateLimitPerHour(System.Int64)'), and [SetRateLimitPerMinute](#M-BarbezDotEu-Provider-PoliteProvider-SetRateLimitPerMinute-System-Int64- 'BarbezDotEu.Provider.PoliteProvider.SetRateLimitPerMinute(System.Int64)') are mutually exclusive, hence the last called method determines the rate limiter.
 
 <a name='M-BarbezDotEu-Provider-PoliteProvider-UpdateTimeOfLastCall-System-DateTime-'></a>
 ### UpdateTimeOfLastCall(lastQueryTime) `method`
