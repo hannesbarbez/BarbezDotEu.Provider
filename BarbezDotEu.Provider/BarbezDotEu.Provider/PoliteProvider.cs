@@ -124,7 +124,11 @@ namespace BarbezDotEu.Provider
             {
                 try
                 {
-                    var content = await response.Content.ReadFromJsonAsync<T>(options);
+                    if (typeof(T) == typeof(string))
+                    {
+
+                    }
+                    var content = await GetContent<T>(response, options);
 
                     // For Blazor, no "actual" DDD since needs async and constructors don't do async.
                     // https://docs.microsoft.com/en-us/aspnet/core/blazor/call-web-api?view=aspnetcore-5.0 
@@ -145,6 +149,18 @@ namespace BarbezDotEu.Provider
             }
 
             return politeResponse;
+        }
+
+        private static async Task<T> GetContent<T>(HttpResponseMessage response, JsonSerializerOptions options) where T : class
+        {
+            if (typeof(T) == typeof(string))
+            {
+                var result = await response.Content.GetAsTextAsync();
+                if (result is T content)
+                    return content;
+            }
+
+            return await response.Content.ReadFromJsonAsync<T>(options);
         }
 
         /// <summary>
