@@ -145,7 +145,7 @@ namespace BarbezDotEu.Provider
             }
             else
             {
-                Logger.LogWarning($"Unsuccessful response: HTTP code {response.StatusCode} - {response.ReasonPhrase}.");
+                Logger.LogInformation($"Unsuccessful response: HTTP code {response.StatusCode} - {response.ReasonPhrase}.");
             }
 
             return politeResponse;
