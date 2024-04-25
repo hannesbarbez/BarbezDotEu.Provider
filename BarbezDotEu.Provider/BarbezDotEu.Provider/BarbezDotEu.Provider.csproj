@@ -1,14 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Authors>Hannes Barbez</Authors>
     <Company>Hannes Barbez</Company>
     <Title>BarbezDotEu.Provider</Title>
     <Product>BarbezDotEu.Provider</Product>
     <PackageId>BarbezDotEu.Provider</PackageId>
-    <Copyright>©2023 Hannes Barbez</Copyright>
-    <Version>8.0.2</Version>
-    <Description>A non-exhaustive, yet useful HTTP(S) JSON client that supports rate limiting, enabling you to implement a polite integration with a third-party data provider.</Description>
+    <Copyright>©2024 Hannes Barbez</Copyright>
+    <Version>9.0.0</Version>
+    <Description>
+        A non-exhaustive, yet useful HTTP(S) JSON client that supports rate limiting, 
+        enabling you to implement a polite integration with a third-party data provider.
+    </Description>
     <PackageTags>basic;polite;http;https;integration;third-party integration;provider;barbez</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -17,14 +20,17 @@
     <RepositoryUrl>https://github.com/hannesbarbez/BarbezDotEu.Provider</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <PackageIconUrl>https://barbez.eu/wp-content/uploads/2023/06/icon1.png</PackageIconUrl>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-  </PropertyGroup>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>ICON.png</PackageIcon>
+    <DebugSymbols>true</DebugSymbols>
+    </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="BarbezDotEu.Http" Version="2.4.1" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\ICON.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="BarbezDotEu.Http" Version="2.4.2" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
-    <PackageReference Include="System.Net.Http.Json" Version="8.0.0" />
-    <PackageReference Include="System.Text.Json" Version="8.0.3" />
   </ItemGroup>
 </Project>

@@ -17,7 +17,12 @@ namespace BarbezDotEu.Provider
     /// Implements an HTTP(S) client that supports rate limiting so that a polite integration
     /// with a third-party data provider can be implemented.
     /// </summary>
-    public class PoliteProvider : IPoliteProvider
+    /// <remarks>
+    /// Constructs a new <see cref="PoliteProvider"/>.
+    /// </remarks>
+    /// <param name="logger">A <see cref="ILogger"/> to use for logging.</param>
+    /// <param name="httpClientFactory">The <see cref="IHttpClientFactory"/> to use.</param>
+    public class PoliteProvider(ILogger logger, IHttpClientFactory httpClientFactory) : IPoliteProvider
     {
         // Defines by how much to multiply the requiredSecondsbetweenCalls, if case calls are not done with regular intervals.
         private long multiplier = 1;
@@ -31,25 +36,14 @@ namespace BarbezDotEu.Provider
         /// <summary>
         /// Gets or sets the <see cref="ILogger"/>.
         /// </summary>
-        protected ILogger Logger { get; }
+        protected ILogger Logger { get; } = logger;
 
-        private readonly IHttpClientFactory httpClientFactory;
+        private readonly IHttpClientFactory httpClientFactory = httpClientFactory;
 
         /// <summary>
         /// Gets the number of seconds required to lapse before a next call to the data provider is considered polite.
         /// </summary>
         protected int RequiredSecondsInBetweenCalls { get; private set; }
-
-        /// <summary>
-        /// Constructs a new <see cref="PoliteProvider"/>.
-        /// </summary>
-        /// <param name="logger">A <see cref="ILogger"/> to use for logging.</param>
-        /// <param name="httpClientFactory">The <see cref="IHttpClientFactory"/> to use.</param>
-        public PoliteProvider(ILogger logger, IHttpClientFactory httpClientFactory)
-        {
-            this.Logger = logger;
-            this.httpClientFactory = httpClientFactory;
-        }
 
         /// <inheritdoc/>
         public bool IsPolite()
@@ -85,10 +79,8 @@ namespace BarbezDotEu.Provider
             {
                 this.UpdateTimeOfLastCall(DateTime.UtcNow);
                 var httpClient = this.httpClientFactory.CreateClient();
-                using (var response = await httpClient.SendAsync(request))
-                {
-                    return await GetPoliteResponse<T>(response);
-                }
+                using var response = await httpClient.SendAsync(request);
+                return await GetPoliteResponse<T>(response);
             }
             catch (Exception exception)
             {
