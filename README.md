@@ -1,5 +1,5 @@
-<a name='assembly'></a>
 # BarbezDotEu.Provider
+A non-exhaustive, yet useful HTTP(S) JSON client that supports rate limiting, enabling you to implement a polite integration with a third-party data provider.
 
 ## Contents
 
