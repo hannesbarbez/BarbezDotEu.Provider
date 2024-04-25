@@ -86,8 +86,9 @@ namespace BarbezDotEu.Provider
             {
                 if (retryOnError)
                 {
-                    Logger.LogWarning($"{nameof(PoliteProvider)} waiting {waitingMinutesBeforeRetry} minutes " +
-                        $"because of an exception occuring during a {typeof(T)} request. No crash, going to try again. Exception details:{Environment.NewLine}{exception}.");
+                    Logger.LogWarning("{nameofPoliteProvider} waiting {waitingMinutesBeforeRetry} minutes " +
+                        "because of an exception occuring during a {typeofT} request. No crash, going to try again. " +
+                        "Exception details: {exception}.", nameof(PoliteProvider), waitingMinutesBeforeRetry, typeof(T), exception);
 
                     Thread.Sleep(TimeSpan.FromMinutes(waitingMinutesBeforeRetry));
                     var newRequest = await request.Clone();
@@ -129,15 +130,14 @@ namespace BarbezDotEu.Provider
                 catch (JsonException exception)
                 {
                     var contents = await response.Content.ReadAsStringAsync();
-                    Logger.LogWarning($"{nameof(PoliteProvider)} expected JSON but got something else: " +
-                        $"{contents}.{Environment.NewLine}" +
-                        $"Exception details: {exception}.");
+                    Logger.LogWarning("{nameofPoliteProvider} expected JSON but got something else: " +
+                        "{contents}. Exception details: {exception}.", nameof(PoliteProvider), contents, exception);
                     throw;
                 }
             }
             else
             {
-                Logger.LogInformation($"Unsuccessful response: HTTP code {response.StatusCode} - {response.ReasonPhrase}.");
+                Logger.LogInformation("Unsuccessful response: HTTP code {responseStatusCode} - {responseReasonPhrase}.", response.StatusCode, response.ReasonPhrase);
             }
 
             return politeResponse;

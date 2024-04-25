@@ -7,22 +7,18 @@ using BarbezDotEu.Provider.Interfaces;
 namespace BarbezDotEu.Provider
 {
     /// <inheritdoc/>
-    public class PoliteReponse<T> : IPoliteResponse<T> where T : class
+    /// <summary>
+    /// Constructs a new <see cref="PoliteReponse{T}"/> from a given <see cref="HttpResponseMessage"/>.
+    /// </summary>
+    /// <param name="httpResponseMessage">The <see cref="HttpResponseMessage"/> to construct this <see cref="IPoliteResponse{T}"/> from.</param>
+    public class PoliteReponse<T>(HttpResponseMessage httpResponseMessage) : IPoliteResponse<T> where T : class
     {
-        /// <summary>
-        /// Constructs a new <see cref="PoliteReponse{T}"/> from a given <see cref="HttpResponseMessage"/>.
-        /// </summary>
-        /// <param name="httpResponseMessage">The <see cref="HttpResponseMessage"/> to construct this <see cref="IPoliteResponse{T}"/> from.</param>
-        public PoliteReponse(HttpResponseMessage httpResponseMessage)
-        {
-            this.HttpResponseMessage = httpResponseMessage;
-        }
 
         /// <inheritdoc/>
         public T Content { get; private set; }
 
         /// <inheritdoc/>
-        public HttpResponseMessage HttpResponseMessage { get; }
+        public HttpResponseMessage HttpResponseMessage { get; } = httpResponseMessage;
 
         /// <inheritdoc/>
         public bool HasFailed => !HttpResponseMessage.IsSuccessStatusCode;
