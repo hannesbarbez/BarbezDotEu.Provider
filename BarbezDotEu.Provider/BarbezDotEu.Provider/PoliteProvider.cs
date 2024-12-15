@@ -15,7 +15,7 @@ namespace BarbezDotEu.Provider
 {
     /// <summary>
     /// Implements an HTTP(S) client that supports rate limiting so that a polite integration
-    /// with a third-party data provider can be implemented.
+    /// with a third-party JSON-based data provider can be implemented.
     /// </summary>
     /// <remarks>
     /// Constructs a new <see cref="PoliteProvider"/>.
@@ -100,62 +100,6 @@ namespace BarbezDotEu.Provider
         }
 
         /// <summary>
-        /// Converts a <see cref="HttpResponseMessage"/> into a <see cref="PoliteReponse{T}"/>.
-        /// </summary>
-        /// <typeparam name="T">The view model to deserialize a successful response into.</typeparam>
-        /// <param name="response">The response to convert.</param>
-        /// <returns>The <see cref="HttpResponseMessage"/> as <see cref="PoliteReponse{T}"/>.</returns>
-        private async Task<PoliteReponse<T>> GetPoliteResponse<T>(HttpResponseMessage response) where T : class
-        {
-            var politeResponse = new PoliteReponse<T>(response);
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true,
-            };
-
-            if (response.IsSuccessStatusCode)
-            {
-                try
-                {
-                    if (typeof(T) == typeof(string))
-                    {
-
-                    }
-                    var content = await GetContent<T>(response, options);
-
-                    // For Blazor, no "actual" DDD since needs async and constructors don't do async.
-                    // https://docs.microsoft.com/en-us/aspnet/core/blazor/call-web-api?view=aspnetcore-5.0 
-                    politeResponse.SetContent(content);
-                }
-                catch (JsonException exception)
-                {
-                    var contents = await response.Content.ReadAsStringAsync();
-                    Logger.LogWarning("{nameofPoliteProvider} expected JSON but got something else: " +
-                        "{contents}. Exception details: {exception}.", nameof(PoliteProvider), contents, exception);
-                    throw;
-                }
-            }
-            else
-            {
-                Logger.LogInformation("Unsuccessful response: HTTP code {responseStatusCode} - {responseReasonPhrase}.", response.StatusCode, response.ReasonPhrase);
-            }
-
-            return politeResponse;
-        }
-
-        private static async Task<T> GetContent<T>(HttpResponseMessage response, JsonSerializerOptions options) where T : class
-        {
-            if (typeof(T) == typeof(string))
-            {
-                var result = await response.Content.GetAsTextAsync();
-                if (result is T content)
-                    return content;
-            }
-
-            return await response.Content.ReadFromJsonAsync<T>(options);
-        }
-
-        /// <summary>
         /// Updates the date and time of when the last call to the provider, i.e. third-party resource, was made.
         /// </summary>
         /// <remarks>
@@ -204,6 +148,53 @@ namespace BarbezDotEu.Provider
         protected void SetRateLimitPerHour(long callsPerHour)
         {
             this.RequiredSecondsInBetweenCalls = (int)Math.Ceiling(OneHourInSeconds / callsPerHour);
+        }
+
+        /// <summary>
+        /// Converts a <see cref="HttpResponseMessage"/> into a <see cref="PoliteReponse{T}"/>.
+        /// </summary>
+        /// <typeparam name="T">The view model to deserialize a successful response into.</typeparam>
+        /// <param name="response">The response to convert.</param>
+        /// <returns>The <see cref="HttpResponseMessage"/> as <see cref="PoliteReponse{T}"/>.</returns>
+        private async Task<PoliteReponse<T>> GetPoliteResponse<T>(HttpResponseMessage response) where T : class
+        {
+            try
+            {
+                var politeResponse = new PoliteReponse<T>(response);
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                };
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await GetContent<T>(response, options);
+                    politeResponse.SetContent(content);
+                }
+
+                Logger.LogInformation("Response: HTTP code {responseStatusCode} - {responseReasonPhrase}.", response.StatusCode, response.ReasonPhrase);
+                return politeResponse;
+            }
+            catch (JsonException exception)
+            {
+                var contents = await response.Content.ReadAsStringAsync();
+                Logger.LogWarning("{nameofPoliteProvider} expected JSON but got something else: " +
+                    "{contents}. Exception details: {exception}.", nameof(PoliteProvider), contents, exception);
+
+                throw;
+            }
+        }
+
+        private static async Task<T> GetContent<T>(HttpResponseMessage response, JsonSerializerOptions options) where T : class
+        {
+            if (typeof(T) == typeof(string))
+            {
+                var result = await response.Content.GetAsTextAsync();
+                if (result is T content)
+                    return content;
+            }
+
+            return await response.Content.ReadFromJsonAsync<T>(options);
         }
     }
 }

@@ -7,7 +7,7 @@
     <Product>BarbezDotEu.Provider</Product>
     <PackageId>BarbezDotEu.Provider</PackageId>
     <Copyright>©2024 Hannes Barbez</Copyright>
-    <Version>9.0.0</Version>
+    <Version>9.1.1</Version>
     <Description>
         A non-exhaustive, yet useful HTTP(S) JSON client that supports rate limiting, 
         enabling you to implement a polite integration with a third-party data provider.
