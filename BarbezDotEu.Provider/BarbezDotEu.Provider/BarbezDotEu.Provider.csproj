@@ -33,4 +33,7 @@
     <PackageReference Include="BarbezDotEu.Http" Version="2.5.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.5" />
   </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\BarbezDotEu.Http\BarbezDotEu.Http\BarbezDotEu.Http\BarbezDotEu.Http.csproj" />
+    </ItemGroup>
 </Project>
