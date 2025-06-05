@@ -7,7 +7,7 @@
     <Product>BarbezDotEu.Provider</Product>
     <PackageId>BarbezDotEu.Provider</PackageId>
     <Copyright>©2025 Hannes Barbez</Copyright>
-    <Version>10.0.0</Version>
+    <Version>10.0.1</Version>
     <Description>
         A non-exhaustive, yet useful HTTP(S) JSON client that supports rate limiting, 
         enabling you to implement a polite integration with a third-party data provider.
@@ -24,6 +24,14 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIcon>ICON.png</PackageIcon>
     <DebugSymbols>true</DebugSymbols>
+    </PropertyGroup>
+
+    <!-- only applies when Configuration == Release: -->
+    <PropertyGroup Condition="'$(Configuration)'=='Release'">
+        <!-- Turn off generation of a .pdb and strip debug info entirely -->
+        <DebugType>none</DebugType>
+        <DebugSymbols>false</DebugSymbols>
+        <Optimize>true</Optimize>
     </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="\" />
